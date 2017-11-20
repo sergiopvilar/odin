@@ -1,0 +1,72 @@
+<section class="hero">
+  <div class="hero-body no-left">
+    <div class="container">
+      <h1 class="title">
+        <img src="<%=@item.image%>" />
+        <%=@item.name%>
+      </h1>
+    </div>
+  </div>
+</section>
+
+<div class="columns">
+  <div class="column has-text-centered">
+    <img src="<%=@item.big_image%>" />
+  </div>
+  <div class="column is-four-fifths">
+    <% if @item.weapon? %>
+      <p><strong>Ataque:</strong> <%=@item.atk%></p>
+      <p><strong>Peso:</strong> <%=(@item.weight / 10)%></p>
+      <p><strong>Nível da Arma:</strong> <%=@item.weapon_level%></p>
+    <% end %>
+
+    <p><strong>Nível Necessário:</strong> <%=@item.level_required%></p>
+    <p><strong>Classes que usam:</strong> <%=@item.job_names%></p>
+
+    <% if @item.script != '{}' || @item.script_equip != '{}' || @item.script_unequip != '{}' %>
+      <% if @item.script != '{}' %>
+        <br />
+        <p><strong>Script:</strong><br />
+          <pre><%=@item.script%></pre>
+        </p>
+      <% end %>
+
+      <% if @item.script_equip != '{}' %>
+        <br />
+        <p><strong>Script ao equipar:</strong><br />
+          <pre><%=@item.script_equip%></pre>
+        </p>
+      <% end %>
+
+      <% if @item.script_unequip != '{}' %>
+        <br />
+        <p><strong>Script ao desequipar:</strong><br />
+          <pre><%=@item.script_unequip%></pre>
+        </p>
+      <% end %>
+
+    <% end %>
+  </div>
+</div>
+
+<table class="table is-fullwidth is-striped">
+  <tr>
+    <th colspan="2">Monstro</th>
+    <th class="has-text-centered">Chance</th>
+  </tr>
+  <% @item.drops.each do |drop| %>
+  <tr>
+    <td width="80" class="has-text-centered">
+      <img style="height:48px" src="<%=drop.mob.image%>" />
+    </td>
+    <td style="padding-top:20px">
+      <a href="<%=mob_path(drop.mob.uid)%>">
+        <%=drop.mob.name_portuguese %>
+      </a>
+    </td>
+    <td class="has-text-centered" style="padding-top:20px">
+      <%=drop.chance%> %
+    </td>
+  </tr>
+  <% end %>
+</table>

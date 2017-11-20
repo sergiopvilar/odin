@@ -1,0 +1,123 @@
+<section class="hero">
+  <div class="hero-body no-left">
+    <div class="container">
+      <h1 class="title"><%=@mob.name_portuguese%></h1>
+      <h2 class="subtitle"><%=@mob.sprite%> (<%=@mob.uid%>)</h2>
+    </div>
+  </div>
+</section>
+
+<table class="table is-fullwidth is-bordered">
+  <tr>
+    <td rowspan="8" colspan="4" align="center" valign="center" width="30%" class="has-text-centered" style="vertical-align:middle;">
+      <img src="<%=@mob.image%>" style="padding-top:40px" />
+    </td>
+    <td><strong>Raça</strong></td>
+    <td><%=@mob.race_text%></td>
+    <td><strong>Elemento</strong></td>
+    <td><%=@mob.element_text%></td>
+  </tr>
+  <tr>
+    <td><strong>Nível</strong></td>
+    <td><%=@mob.level%></td>
+    <td><strong>Tamanho</strong></td>
+    <td><%=@mob.size%></td>
+  </tr>
+  <tr>
+    <td><strong>Alcance</strong></td>
+    <td><%=@mob.range%> células</td>
+    <td><strong>Ataque</strong></td>
+    <td><%=@mob.atk1%> ~ <%=@mob.atk2%></td>
+  </tr>
+  <tr>
+    <td><strong>HP</strong></td>
+    <td><%=@mob.hp%></td>
+    <td><strong>Defesa</strong></td>
+    <td><%=@mob.def%></td>
+  </tr>
+  <tr>
+    <td><strong>SP</strong></td>
+    <td><%=@mob.sp%></td>
+    <td><strong>Defesa Mágica</strong></td>
+    <td><%=@mob.mdef%></td>
+  </tr>
+  <tr>
+    <td><strong>Experiência Base</strong></td>
+    <td><%=@mob.exp%></td>
+    <td><strong>Experiência de Classe</strong></td>
+    <td><%=@mob.job_exp%></td>
+  </tr>
+  <tr>
+    <td><strong>100% de Acerto</strong></td>
+    <td><%=@mob.acerto%></td>
+    <td><strong>95% de Esquiva</strong></td>
+    <td><%=@mob.esquiva_95%></td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+    <td><strong>Attack Delay</strong></td>
+    <td><%=@mob.atk_delay%></td>
+  </tr>
+</table>
+
+<table class="table is-fullwidth">
+  <tr>
+    <th width="20%">Atributos</th>
+    <th width="40%">Respawn</th>
+    <th width="40%">Drops</th>
+  </tr>
+  <tr>
+    <td>
+      <table class="table is-fullwidth">
+        <tr>
+          <td><strong>Força</strong></td>
+          <td><%=@mob.str%></td>
+        </tr>
+        <tr>
+          <td><strong>Agilidade</strong></td>
+          <td><%=@mob.agi%></td>
+        </tr>
+        <tr>
+          <td><strong>Vitalidade</strong></td>
+          <td><%=@mob.vit%></td>
+        </tr>
+        <tr>
+          <td><strong>Inteligência</strong></td>
+          <td><%=@mob.int%></td>
+        </tr>
+        <tr>
+          <td><strong>Destreza</strong></td>
+          <td><%=@mob.dex%></td>
+        </tr>
+        <tr>
+          <td><strong>Sorte</strong></td>
+          <td><%=@mob.luk%></td>
+        </tr>
+      </table>
+    </td>
+    <td class="content">
+      <% if @mob.respawns.any? %>
+      <ul>
+      <% @mob.respawns.each do |respawn| %>
+        <li><%=respawn.amount%>x em <%=respawn.map%><%=respawn.tempo%></li>
+      <% end %>
+      </ul>
+      <% else %>
+        Este monstro não possui nenhum respawn.
+      <% end %>
+    </td>
+    <td class="content">
+      <% if @mob.drops.any? %>
+      <ul>
+        <% @mob.drops.sort_by { |obj| obj.real_chance }.reverse.each do |drop| %>
+          <li>
+            <a href="<%=item_path(drop.item.uid)%>"><img src="<%=drop.item.image%>" /> <%=drop.item.name %></a>
+             em <%=drop.real_chance%> %</li>
+        <% end %>
+      </ul>
+      <% else %>
+        Este monstro não possui nenhum drop.
+      <% end %>
+    </td>
+  </tr>
+</table>

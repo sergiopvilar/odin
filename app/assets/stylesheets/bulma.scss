@@ -1,0 +1,27 @@
+@import "../../../node_modules/bulma/sass/utilities/initial-variables";
+$primary: #37a6b7;
+$tabs-link-active-color: $black;
+@import "../../../node_modules/bulma/bulma";
+@import "../../../node_modules/balloon-css/src/balloon";
+
+.no-left {
+  padding-left: 0!important
+}
+
+.main-hero {
+  .hero-body {
+    padding-bottom:40px!important;
+  }
+
+  .columns {
+    margin-top: 50px;
+  }
+
+  label {
+    color: white;
+  }
+}
+
+.tt-menu {
+  width: 100%;
+}

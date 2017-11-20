@@ -1,0 +1,27 @@
+<section class="hero <%=defined?(classes) ? classes : '' %>" style="<%=defined?(subtitle) || defined?(margin) ? '' : 'height:85px'%>">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+
+        <div class="column">
+          <h1 class="title">
+            <%=title.html_safe%>
+          </h1>
+
+          <% if defined?(subtitle) %>
+          <h2 class="subtitle"><%=subtitle%></h2>
+          <% end %>
+        </div>
+
+        <% if !defined?(back) && include_back_button? %>
+        <div class="column is-narrow is-hidden-touch">
+          <div class="field is-grouped">
+            <%=render 'shared/back_button' %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</section>

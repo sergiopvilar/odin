@@ -1,0 +1,5 @@
+<%=render partial: 'pages/header', locals: { title: @title, margin: true, back: false } %>
+
+<div class="markdown-page content">
+  <%=@markdown.render(File.read(@file)).html_safe%>
+</div>
