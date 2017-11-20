@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock "3.9.0"
+lock "3.10.0"
 
 server '138.197.41.12', user: 'root', port: 22, roles: [:web, :app, :db], primary: true
 set :application, "odindb"
