@@ -80,6 +80,11 @@ class Item < ApplicationRecord
   end
 
   def job_names
+
+    return 'Assasinos' if weapon? && weapon_type == 'Katar'
+    return 'Odaliscas' if weapon? && weapon_type == 'Chicote'
+    return 'Bardos' if weapon? && weapon_type == 'Instrumento Musical'
+
     jobs = {
       'Super Aprendizes': 2**0,
       'Espadachins': 2**1,
