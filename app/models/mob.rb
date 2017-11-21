@@ -15,6 +15,10 @@ class Mob < ApplicationRecord
     name_portuguese
   end
 
+  def description
+    "HP: #{hp} | Raça: #{race_text} | Tamanho: #{size} | Propriedade: #{element_text}"
+  end
+
   def acerto
     level + agi + 20
   end
