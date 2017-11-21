@@ -38,3 +38,18 @@ append :linked_files, ".unicorn.sh"
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
+task :restart_unicorn do
+  on roles(:app) do
+    execute :service, "unicorn restart"
+  end
+end
+
+task :set_permissions do
+  on roles(:app) do
+    execute "chmod -R 777 /home/rails/current/public/icons"
+  end
+end
+
+after "deploy:published", "restart_unicorn"
+after "deploy:published", "set_permissions"
