@@ -22,7 +22,8 @@ class Item < ApplicationRecord
 
   def full_description
     reserved = ['Defesa:', 'Peso:', 'Classe:', 'Nível da arma:', 'Nível necessário:', 'Profissões que utilizam:',
-              'Tipo:', 'Nv. da Arma', 'Nv. Necessário:', 'Classe Aplicável:', 'Tipo de Arma:', 'Equipa em:']
+              'Tipo:', 'Nv. da Arma', 'Nv. Necessário:', 'Classe Aplicável:', 'Tipo de Arma:', 'Equipa em:',
+              'Tipo de Item:', 'Nível Necessário:', 'Classes:']
     return '' if description.blank?
     arr = description.split("\n")
                      .reject { |i| reserved.any? { |r| i.starts_with?(r) } }
