@@ -10,6 +10,7 @@ set :repo_url, "git@github.com:sergiovilar/odin-db.git"
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/rails"
+set :current_path, '/home/rails/rails_project'
 set :user,            'root'
 
 # Default value for :format is :airbrussh.
