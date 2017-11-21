@@ -40,6 +40,7 @@ gem 'responders'
 gem 'sanitize'
 gem 'redcarpet'
 gem 'dotenv-rails'
+gem 'unicorn'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -61,10 +62,6 @@ group :development do
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-dotenv-tasks', require: false
-end
-
-group :production do
-  gem 'unicorn'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
