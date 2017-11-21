@@ -40,7 +40,7 @@ gem 'responders'
 gem 'sanitize'
 gem 'redcarpet'
 gem 'dotenv-rails'
-gem 'rake', '~> 12.3.0'
+gem 'unicorn'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
