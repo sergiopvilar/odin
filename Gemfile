@@ -63,5 +63,9 @@ group :development do
   gem 'capistrano-dotenv-tasks', require: false
 end
 
+group :production do
+  gem 'unicorn'
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
