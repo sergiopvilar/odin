@@ -22,8 +22,8 @@
 
 .byebug_history
 .DS_Store
-!/public/icons/mob/default.gif
-!/public/icons/mob/default.png
 /public/icons/mob/*.gif
 /public/icons/item/*.png
 /public/icons/collection/*.png
+!/public/icons/mob/default.gif
+!/public/icons/item/default.png
