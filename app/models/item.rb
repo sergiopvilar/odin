@@ -21,8 +21,13 @@ class Item < ApplicationRecord
 
   def full_description
     reserved = ['Defesa:', 'Peso:', 'Classe:', 'Nível da arma:', 'Nível necessário:', 'Profissões que utilizam:',
-              'Tipo:']
-    arr = description.split("\n").reject { |i| reserved.any? { |r| i.starts_with?(r) } }
+              'Tipo:', 'Nv. da Arma', 'Nv. Necessário:', 'Classe Aplicável:', 'Tipo de Arma:', 'Equipa em:']
+    return '' if description.blank?
+    arr = description.split("\n")
+                     .reject { |i| reserved.any? { |r| i.starts_with?(r) } }
+                     .reject do |line|
+                       ActionView::Base.full_sanitizer.sanitize(line).strip.to_i != 0
+                      end
     # arr = description.split("\n")
     arr.join('<br />').html_safe
   end
