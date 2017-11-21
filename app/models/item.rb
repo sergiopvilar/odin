@@ -15,6 +15,7 @@ class Item < ApplicationRecord
   end
 
   def peso
+    return weight if weight == 0
     return (weight.to_f / 10) if weight < 10
     weight / 10
   end
