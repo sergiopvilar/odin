@@ -22,6 +22,6 @@ test:
 
 production:
   <<: *default
-  database: odin
+  database: rails_project_production
   username: rails
   password: <%= ENV['APP_DATABASE_PASSWORD'] %>
