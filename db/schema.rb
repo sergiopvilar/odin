@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171119215750) do
+ActiveRecord::Schema.define(version: 20171121164413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20171119215750) do
     t.integer "uid"
     t.string "name_aegis"
     t.string "name_portuguese"
-    t.string "description"
+    t.text "description"
     t.integer "type"
     t.integer "price_buy"
     t.integer "price_sell"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20171119215750) do
     t.string "script"
     t.string "script_equip"
     t.string "script_unequip"
+    t.integer "loc"
   end
 
   create_table "mobs", force: :cascade do |t|

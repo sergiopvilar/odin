@@ -1,3 +1,4 @@
+<% tag_classes = 'tag is-light' %>
 <section class="hero">
   <div class="hero-body no-left">
     <div class="container">
@@ -14,14 +15,35 @@
     <img src="<%=@item.big_image%>" />
   </div>
   <div class="column is-four-fifths">
+
+    <p style="margin-bottom:20px"><%=@item.full_description%></p>
+
     <% if @item.weapon? %>
-      <p><strong>Ataque:</strong> <%=@item.atk%></p>
-      <p><strong>Peso:</strong> <%=(@item.weight / 10)%></p>
-      <p><strong>Nível da Arma:</strong> <%=@item.weapon_level%></p>
+      <p><strong>Ataque:</strong> <span class="<%=tag_classes%>"><%=@item.atk%></span></p>
+      <p><strong>Nível da Arma:</strong> <span class="<%=tag_classes%>"><%=@item.weapon_level%></span></p>
+      <p><strong>Classe:</strong> <span class="<%=tag_classes%>"><%=@item.weapon_type%></span></p>
     <% end %>
 
-    <p><strong>Nível Necessário:</strong> <%=@item.level_required%></p>
-    <p><strong>Classes que usam:</strong> <%=@item.job_names%></p>
+    <% if @item.armor? %>
+      <p><strong>Defesa:</strong> <span class="<%=tag_classes%>"><%=@item.defense%></span></p>
+      <p><strong>Classe:</strong> <span class="<%=tag_classes%>"><%=@item.armor_type%></span></p>
+      <% if @item.hat? %>
+        <p><strong>Equipa em:</strong> <span class="<%=tag_classes%>"><%=@item.hat_location%></span></p>
+      <% end %>
+    <% end %>
+
+    <% if @item.weapon? || @item.armor? %>
+      <p><strong>Classes que usam:</strong> <span class="<%=tag_classes%>"><%=@item.job_names%></span></p>
+      <% if @item.level_required > 0 %>
+      <p><strong>Nível Necessário:</strong> <span class="<%=tag_classes%>"><%=@item.level_required%></span></p>
+      <% end %>
+    <% end %>
+
+    <% if @item.ammo? %>
+      <p><strong>Classe:</strong> <span class="<%=tag_classes%>"><%=@item.ammo_type%></span></p>
+    <% end %>
+
+    <p><strong>Peso:</strong> <span class="<%=tag_classes%>"><%=@item.peso%></span></p>
 
     <% if @item.script != '{}' || @item.script_equip != '{}' || @item.script_unequip != '{}' %>
       <% if @item.script != '{}' %>

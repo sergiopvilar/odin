@@ -6,6 +6,27 @@ class Item < ApplicationRecord
     type == 4
   end
 
+  def armor?
+    type == 5
+  end
+
+  def ammo?
+    type == 10
+  end
+
+  def peso
+    return (weight.to_f / 10) if weight < 10
+    weight / 10
+  end
+
+  def full_description
+    reserved = ['Defesa:', 'Peso:', 'Classe:', 'Nível da arma:', 'Nível necessário:', 'Profissões que utilizam:',
+              'Tipo:']
+    arr = description.split("\n").reject { |i| reserved.any? { |r| i.starts_with?(r) } }
+    # arr = description.split("\n")
+    arr.join('<br />').html_safe
+  end
+
   def name
     return name_portuguese if slots.blank? || slots == 0
     return "#{name_portuguese}[#{slots}]"
@@ -17,6 +38,39 @@ class Item < ApplicationRecord
 
   def big_image
     "/image/item_big/#{uid}.png"
+  end
+
+  def armor_type
+    return 'Equipamento para cabeça' if loc == 256 || loc == 512 || loc == 1
+    return 'Armadura' if loc == 16
+    return 'Arma' if loc == 2
+    return 'Escudo' if loc == 32
+    return 'Capa' if loc == 4
+    return 'Sapatos' if loc == 64
+    return 'Acessório' if loc == 8 || loc == 128
+  end
+
+  def weapon_type
+    types = ['Adaga', 'Espada de uma mão', 'Espada de duas mãos', 'Lança de uma mão', 'Lança de duas mãos',
+             'Machado de uma mão', 'Machado de duas mãos', 'Maça', '', 'Cajado', 'Arco', 'Garra', 'Instrumento Musical',
+             'Chicote', 'Livro', 'Katar', 'Revólver', 'Rifle', 'Metralhadora', 'Escorpeta', 'Lançador de Granada',
+             'Shuriken']
+    return types[view.to_i - 1]
+  end
+
+  def ammo_type
+    types = ['Flecha', 'Adaga lançável', 'Bala', 'Projétil', 'Granada', 'Shuriken', 'Kunai']
+    return types[view.to_i - 1]
+  end
+
+  def hat?
+    loc == 256 || loc == 512 || loc == 1
+  end
+
+  def hat_location
+    return 'Topo' if loc == 256
+    return 'Meio' if loc == 512
+    return 'Baixo' if loc == 1
   end
 
   def job_names
@@ -49,10 +103,12 @@ class Item < ApplicationRecord
       'Ninjas': 2**25
     }
 
+    denied_jobs = ['unused2', 'unused2', 'Espiritualistas', 'Taekwons', 'Justiceiros', 'Ninjas', 'Mestres Taekwons']
+
     jobs = Hash[jobs.to_a.reverse]
     job_translated = job.to_i(16)
     used_jobs = get_jobs(jobs, job_translated)
-    used_jobs.size == jobs.size ? 'Todas' : used_jobs.compact.delete_if{ |i| i == :unused2 || i == :unused }.join(', ')
+    used_jobs.size == jobs.size ? 'Todas' : used_jobs.compact.delete_if{ |i| denied_jobs.include?(i.to_s) }.join(', ')
   end
 
   def as_json(options={})
