@@ -25,6 +25,8 @@
 /public/icons/mob/*.gif
 /public/icons/item/*.png
 /public/icons/collection/*.png
+/public/icons/card/*.png
 !/public/icons/mob/default.gif
 !/public/icons/item/default.png
 !/public/icons/collection/default.png
+!/public/icons/card/default.png

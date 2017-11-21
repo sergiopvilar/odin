@@ -14,7 +14,7 @@ class ImagesController < ApplicationController
 
   def item_big
     item = Item.find_by_uid(params[:id])
-    get_image('collection', 'png', item.uid)
+    item.type == 6 ? get_image('card', 'png', item.uid) : get_image('collection', 'png', item.uid)
   end
 
   private
