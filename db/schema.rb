@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171122101805) do
+ActiveRecord::Schema.define(version: 20171122162233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20171122101805) do
     t.integer "range"
     t.integer "slots"
     t.string "job"
-    t.integer "level_required"
+    t.integer "level_required", default: 1
     t.integer "upper"
     t.integer "sex"
     t.integer "weapon_level"

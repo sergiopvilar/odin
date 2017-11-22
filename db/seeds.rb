@@ -35,7 +35,7 @@ items["items"].each do |i|
     upper: i["uper"],
     sex: i["sexo"],
     job: i["classe"],
-    level_required: i["nivel_requerido"],
+    level_required: i["nivel_requerido"].to_i,
     weapon_level: i["nivel_arma"],
     refinable: i["refinavel"],
     view: i["view"],

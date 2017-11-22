@@ -46,21 +46,21 @@
     <p><strong>Peso:</strong> <span class="<%=tag_classes%>"><%=@item.peso%></span></p>
 
     <% if @item.script != '{}' || @item.script_equip != '{}' || @item.script_unequip != '{}' %>
-      <% if @item.script != '{}' %>
+      <% if !@item.script.blank? && @item.script != '{}' %>
         <br />
         <p><strong>Script:</strong><br />
           <pre><%=@item.script%></pre>
         </p>
       <% end %>
 
-      <% if @item.script_equip != '{}' %>
+      <% if !@item.script_equip.blank? && @item.script_equip != '{}' %>
         <br />
         <p><strong>Script ao equipar:</strong><br />
           <pre><%=@item.script_equip%></pre>
         </p>
       <% end %>
 
-      <% if @item.script_unequip != '{}' %>
+      <% if !@item.script_unequip.blank? && @item.script_unequip != '{}' %>
         <br />
         <p><strong>Script ao desequipar:</strong><br />
           <pre><%=@item.script_unequip%></pre>
