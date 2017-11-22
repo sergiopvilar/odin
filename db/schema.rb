@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171121164413) do
+ActiveRecord::Schema.define(version: 20171122000934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20171121164413) do
     t.integer "adelay"
     t.integer "admotion"
     t.integer "dmotion"
+    t.string "mode"
   end
 
   create_table "respawns", force: :cascade do |t|

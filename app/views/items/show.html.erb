@@ -71,6 +71,7 @@
   </div>
 </div>
 
+<% if @item.drops.any? %>
 <table class="table is-fullwidth is-striped">
   <tr>
     <th colspan="2">Monstro</th>
@@ -92,3 +93,4 @@
   </tr>
   <% end %>
 </table>
+<% end %>

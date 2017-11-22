@@ -7,117 +7,142 @@
   </div>
 </section>
 
+<% table = @mob.elemental_table %>
 <table class="table is-fullwidth is-bordered">
   <tr>
-    <td rowspan="8" colspan="4" align="center" valign="center" width="30%" class="has-text-centered" style="vertical-align:middle;">
+    <td rowspan="11" colspan="4" align="center" valign="center" width="30%" class="has-text-centered" style="vertical-align:middle;">
       <img src="<%=@mob.image%>" style="padding-top:40px" />
     </td>
-    <td><strong>Raça</strong></td>
+    <td colspan="2"><strong>Raça</strong></td>
     <td><%=@mob.race_text%></td>
-    <td><strong>Elemento</strong></td>
+    <td colspan="2"><strong>Elemento</strong></td>
     <td><%=@mob.element_text%></td>
+    <td><strong>Propriedade</strong></td>
+    <td><strong>Dano</strong></td>
   </tr>
   <tr>
-    <td><strong>Nível</strong></td>
+    <td colspan="2"><strong>Nível</strong></td>
     <td><%=@mob.level%></td>
-    <td><strong>Tamanho</strong></td>
+    <td colspan="2"><strong>Tamanho</strong></td>
     <td><%=@mob.size%></td>
+    <td>Neutro</td>
+    <td><%=format_element(table["neutral"])%></td>
   </tr>
   <tr>
-    <td><strong>Alcance</strong></td>
+    <td colspan="2"><strong>Alcance</strong></td>
     <td><%=@mob.range%> células</td>
-    <td><strong>Ataque</strong></td>
+    <td colspan="2"><strong>Ataque</strong></td>
     <td><%=@mob.atk1%> ~ <%=@mob.atk2%></td>
+    <td>Água</td>
+    <td><%=format_element(table["water"])%></td>
   </tr>
   <tr>
-    <td><strong>HP</strong></td>
+    <td colspan="2"><strong>HP</strong></td>
     <td><%=@mob.hp%></td>
-    <td><strong>Defesa</strong></td>
+    <td colspan="2"><strong>Defesa</strong></td>
     <td><%=@mob.def%></td>
+    <td>Terra</td>
+    <td><%=format_element(table["earth"])%></td>
   </tr>
   <tr>
-    <td><strong>SP</strong></td>
+    <td colspan="2"><strong>SP</strong></td>
     <td><%=@mob.sp%></td>
-    <td><strong>Defesa Mágica</strong></td>
+    <td colspan="2"><strong>Defesa Mágica</strong></td>
     <td><%=@mob.mdef%></td>
+    <td>Fogo</td>
+    <td><%=format_element(table["fire"])%></td>
   </tr>
   <tr>
-    <td><strong>Experiência Base</strong></td>
+    <td colspan="2"><strong>Experiência Base</strong></td>
     <td><%=@mob.exp%></td>
-    <td><strong>Experiência de Classe</strong></td>
+    <td colspan="2"><strong>Experiência de Classe</strong></td>
     <td><%=@mob.job_exp%></td>
+    <td>Vento</td>
+    <td><%=format_element(table["wind"])%></td>
   </tr>
   <tr>
-    <td><strong>100% de Acerto</strong></td>
+    <td colspan="2"><strong>100% de Acerto</strong></td>
     <td><%=@mob.acerto%></td>
-    <td><strong>95% de Esquiva</strong></td>
+    <td colspan="2"><strong>95% de Esquiva</strong></td>
     <td><%=@mob.esquiva_95%></td>
+    <td>Veneno</td>
+    <td><%=format_element(table["poison"])%></td>
   </tr>
   <tr>
-    <td colspan="2"></td>
-    <td><strong>Attack Delay</strong></td>
-    <td><%=@mob.atk_delay%></td>
+    <td colspan="2"><strong>Attack Delay</strong></td>
+    <td colspan="4"><%=@mob.atk_delay%></td>
+    <td>Sagrado</td>
+    <td><%=format_element(table["holy"])%></td>
+  </tr>
+  <tr>
+    <td><strong>FOR</strong></td>
+    <td><strong>AGI</strong></td>
+    <td><strong>VIT</strong></td>
+    <td><strong>INT</strong></td>
+    <td><strong>DES</strong></td>
+    <td><strong>LUK</strong></td>
+    <td>Sombrio</td>
+    <td><%=format_element(table["shadow"])%></td>
+  </tr>
+  <tr>
+    <td><%=@mob.str%></td>
+    <td><%=@mob.agi%></td>
+    <td><%=@mob.vit%></td>
+    <td><%=@mob.int%></td>
+    <td><%=@mob.dex%></td>
+    <td><%=@mob.luk%></td>
+    <td>Fantasma</td>
+    <td><%=format_element(table["ghost"])%></td>
+  </tr>
+  <tr>
+    <td colspan="6">
+      <%=@mob.mode_text%>
+    </td>
+    <td>Maldito</td>
+    <td><%=format_element(table["undead"])%></td>
   </tr>
 </table>
 
-<table class="table is-fullwidth">
-  <tr>
-    <th width="20%">Atributos</th>
-    <th width="40%">Respawn</th>
-    <th width="40%">Drops</th>
-  </tr>
-  <tr>
-    <td>
-      <table class="table is-fullwidth">
+<div class="columns">
+  <div class="column content">
+    <h4>Respawns</h4>
+    <% if @mob.respawns.any? %>
+      <table class="table is-striped is-bordered is-fullwidth">
         <tr>
-          <td><strong>Força</strong></td>
-          <td><%=@mob.str%></td>
+          <th width="60">Quantidade</th>
+          <th>Mapa</th>
+          <th class="has-text-centered">Tempo</th>
         </tr>
+        <% @mob.respawns.each do |respawn| %>
         <tr>
-          <td><strong>Agilidade</strong></td>
-          <td><%=@mob.agi%></td>
+          <td class="has-text-centered"><%=respawn.amount%></td>
+          <td><%=respawn.map%></td>
+          <td class="has-text-centered"><%=respawn.tempo%></td>
         </tr>
-        <tr>
-          <td><strong>Vitalidade</strong></td>
-          <td><%=@mob.vit%></td>
-        </tr>
-        <tr>
-          <td><strong>Inteligência</strong></td>
-          <td><%=@mob.int%></td>
-        </tr>
-        <tr>
-          <td><strong>Destreza</strong></td>
-          <td><%=@mob.dex%></td>
-        </tr>
-        <tr>
-          <td><strong>Sorte</strong></td>
-          <td><%=@mob.luk%></td>
-        </tr>
-      </table>
-    </td>
-    <td class="content">
-      <% if @mob.respawns.any? %>
-      <ul>
-      <% @mob.respawns.each do |respawn| %>
-        <li><%=respawn.amount%>x em <%=respawn.map%><%=respawn.tempo%></li>
-      <% end %>
-      </ul>
-      <% else %>
-        Este monstro não possui nenhum respawn.
-      <% end %>
-    </td>
-    <td class="content">
-      <% if @mob.drops.any? %>
-      <ul>
-        <% @mob.drops.sort_by { |obj| obj.real_chance }.reverse.each do |drop| %>
-          <li>
-            <a href="<%=item_path(drop.item.uid)%>"><img src="<%=drop.item.image%>" /> <%=drop.item.name %></a>
-             em <%=drop.real_chance%> %</li>
         <% end %>
-      </ul>
-      <% else %>
-        Este monstro não possui nenhum drop.
-      <% end %>
-    </td>
-  </tr>
-</table>
+      </table>
+    <% else %>
+      <p>Este monstro não tem respawn em nenhum mapa</p>
+    <% end %>
+  </div>
+  <div class="column content">
+    <h4>Drops</h4>
+    <% if @mob.drops.any? %>
+      <table class="table is-striped is-bordered is-fullwidth">
+        <tr>
+          <th>Item</th>
+          <th class="has-text-centered">Chance</th>
+        </tr>
+        <% @mob.drops.sort_by { |obj| obj.real_chance }.reverse.each do |drop| %>
+          <tr>
+            <td><a href="<%=item_path(drop.item.uid)%>">
+              <img style="position: relative; top:4px" src="<%=drop.item.image%>" /> <%=drop.item.name %></a></td>
+            <td class="has-text-centered"><%=drop.real_chance%>%</td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <p>Este monstro não tem nenhum drop</p>
+    <% end %>
+  </div>
+</div>

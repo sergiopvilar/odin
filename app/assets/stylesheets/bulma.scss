@@ -37,3 +37,9 @@ $tabs-link-active-color: $black;
     text-indent: -9999px;
   }
 }
+
+.table.is-bordeless {
+  & td, & th {
+    border: none
+  }
+}
