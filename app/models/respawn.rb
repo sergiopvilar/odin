@@ -1,5 +1,6 @@
 class Respawn < ApplicationRecord
   belongs_to :mob
+  belongs_to :map
 
   def tempo
     return 'Instantaneamente' if (delay_start/(60 * 1000)) <= 0
