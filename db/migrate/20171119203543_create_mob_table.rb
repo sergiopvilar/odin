@@ -4,6 +4,7 @@ class CreateMobTable < ActiveRecord::Migration[5.1]
       t.integer :uid
       t.string :sprite
       t.string :name_portuguese
+      t.string :name_english
       t.integer :level
       t.integer :hp
       t.integer :sp
@@ -29,6 +30,7 @@ class CreateMobTable < ActiveRecord::Migration[5.1]
       t.integer :adelay
       t.integer :admotion
       t.integer :dmotion
+      t.string :mode
     end
   end
 end

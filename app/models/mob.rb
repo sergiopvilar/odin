@@ -12,7 +12,7 @@ class Mob < ApplicationRecord
   end
 
   def name
-    name_portuguese
+    name_portuguese.blank? ? name_english : name_portuguese
   end
 
   def description
@@ -69,7 +69,7 @@ class Mob < ApplicationRecord
       '0x8084': 'Agressivo / Imóvel / Alvo aleatório',
     }
 
-    return '' unless modes.key?(mode.to_sym)
+    return '' if mode.blank? || !modes.key?(mode.to_sym)
     return modes[mode.to_sym]
   end
 
@@ -101,6 +101,7 @@ class Mob < ApplicationRecord
 
   def self.results_for(term)
     Mob.where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
+       .or(Mob.where("lower(name_english) LIKE ?", "%#{term.downcase}%"))
        .or(Mob.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
        .or(Mob.where(uid: term))
        .includes(:respawns)

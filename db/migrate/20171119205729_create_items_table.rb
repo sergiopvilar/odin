@@ -4,6 +4,7 @@ class CreateItemsTable < ActiveRecord::Migration[5.1]
       t.integer :uid
       t.string :name_aegis
       t.string :name_portuguese
+      t.string :name_english
       t.string :description
       t.integer :type
       t.integer :price_buy
@@ -23,6 +24,7 @@ class CreateItemsTable < ActiveRecord::Migration[5.1]
       t.string :script
       t.string :script_equip
       t.string :script_unequip
+      t.integer :loc
     end
   end
 end
