@@ -49,7 +49,7 @@ class Item < ApplicationRecord
   end
 
   def armor_type
-    return 'Equipamento para cabeça' if loc == 256 || loc == 512 || loc == 1
+    return 'Equipamento para cabeça' if hat?
     return 'Armadura' if loc == 16
     return 'Arma' if loc == 2
     return 'Escudo' if loc == 32
