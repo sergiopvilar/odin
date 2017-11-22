@@ -9,7 +9,9 @@
           <div class="field">
             <label class="label">Busca por Itens</label>
             <div class="control">
-              <input id="item-search" class="input is-medium" type="text" placeholder="ID ou Nome do Item">
+              <form id="item-form" action="/items/search" method="GET">
+                <input id="item-search" name="s" class="input is-medium" type="text" placeholder="ID ou Nome do Item">
+              </form>
             </div>
           </div>
         </div>
@@ -17,7 +19,9 @@
           <div class="field">
             <label class="label">Busca por Monstros</label>
             <div class="control">
-              <input id="mob-search" class="input is-medium" type="text" placeholder="ID ou Nome do Monstro">
+              <form id="mob-form" action="/mobs/search" method="GET">
+                <input id="mob-search" name="s" class="input is-medium" type="text" placeholder="ID ou Nome do Monstro">
+              </form>
             </div>
           </div>
         </div>

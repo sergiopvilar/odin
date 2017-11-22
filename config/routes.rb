@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :mobs, only: [:show]
-  resources :items, only: [:show]
-
   # Pages
   get '/', to: 'pages#root'
   get '/changelog', to: 'pages#changelog'
@@ -10,8 +7,16 @@ Rails.application.routes.draw do
   get '/items/autocomplete/:s', to: 'autocomplete#items'
   get '/mobs/autocomplete/:s', to: 'autocomplete#mobs'
 
+  # Search
+  get '/items/search', to: 'items#search'
+  get '/mobs/search', to: 'mobs#search'
+
   # Images
   get '/image/mob/:id', to: 'images#mob'
   get '/image/item/:id', to: 'images#item'
   get '/image/item_big/:id', to: 'images#item_big'
+
+  # Resources
+  resources :mobs, only: [:show]
+  resources :items, only: [:show]
 end

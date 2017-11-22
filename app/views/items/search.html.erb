@@ -1,0 +1,20 @@
+<div class="content-inside">
+
+  <h1 class="title">Resultado da busca de itens para "<%=params[:s]%>"</h1>
+  <h2 class="subtitle">Foram encontrados <%=@items.size%> itens</h2>
+
+  <% if @items.any? %>
+    <table class="table is-fullwidth is-striped">
+      <% @items.each do |item| %>
+        <tr>
+          <td>
+            <a href="<%=item_path(item.uid)%>"><img src="<%=item.image%>" /> <%=item.name%></a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>Nada encontrado para sua busca.</p>
+  <% end %>
+
+</div>

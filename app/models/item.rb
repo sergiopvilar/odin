@@ -127,6 +127,12 @@ class Item < ApplicationRecord
     super(options.merge({:methods => [:image, :name]}))
   end
 
+  def self.results_for(term)
+    Item.where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
+        .or(Item.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
+        .or(Item.where(uid: term))
+  end
+
   private
 
   def get_jobs(_jobs, rema)

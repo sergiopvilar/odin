@@ -19,6 +19,23 @@ var mobs = new Bloodhound({
 window.selectedItem = false
 window.selectedMob = false
 
+var itemForm = $('#item-form')
+var mobForm = $('#mob-form')
+
+itemForm.on('submit', function(e) {
+  if(window.selectedItem) {
+    e.preventDefault()
+    location.href = '/items/' + window.selectedItem.uid;
+  }
+})
+
+mobForm.on('submit', function(e) {
+  if(window.selectedMob) {
+    e.preventDefault()
+    location.href = '/mobs/' + window.selectedMob.uid;
+  }
+})
+
 $('#item-search').typeahead(null, {
   name: 'items',
   display: 'name',
@@ -32,7 +49,7 @@ $('#item-search').typeahead(null, {
   if(window.selectedItem && $(this).val() !== window.selectedItem.name)
     window.selectedItem = false
 }).on('keypress', function(e) {
-  if(e.which == 13 && window.selectedItem !== false) location.href = '/items/' + window.selectedItem.uid
+  if(e.which == 13) itemForm.submit();
 }).bind('typeahead:selected', function(obj, datum, name) {
   window.selectedItem = datum
   location.href = '/items/' + window.selectedItem.uid
@@ -51,7 +68,7 @@ $('#mob-search').typeahead(null, {
   if(window.selectedMob && $(this).val() !== window.selectedMob.name)
     window.selectedMob = false
 }).on('keypress', function(e) {
-  if(e.which == 13 && window.selectedMob !== false) location.href = '/mobs/' + window.selectedMob.uid
+  if(e.which == 13) mobForm.submit();
 }).bind('typeahead:selected', function(obj, datum, name) {
   window.selectedMob = datum
   location.href = '/mobs/' + window.selectedMob.uid

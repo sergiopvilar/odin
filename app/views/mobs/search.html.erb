@@ -1,0 +1,28 @@
+<div class="content-inside">
+
+  <h1 class="title">Resultado da busca de monstros para "<%=params[:s]%>"</h1>
+  <h2 class="subtitle">Foram encontrados <%=@mobs.size%> monstros</h2>
+
+  <% if @mobs.any? %>
+    <table class="table is-fullwidth is-striped">
+      <tr>
+        <th colspan="2">Monstro</th>
+        <th>Respawns</th>
+      </tr>
+      <% @mobs.each do |mob| %>
+        <tr>
+          <td width="80" class="has-text-centered">
+            <img style="height:48px" src="<%=mob.image%>" />
+          </td>
+          <td style="padding-top:20px">
+            <a href="<%=mob_path(mob.uid)%>"><%=mob.name%> (<%=mob.sprite%>)</a>
+          </td>
+          <td><%=mob.respawns.any? ? mob.respawns.map {|r| r.map }.join(', ') : 'Nenhum respawn' %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>Nada encontrado para sua busca.</p>
+  <% end %>
+
+</div>

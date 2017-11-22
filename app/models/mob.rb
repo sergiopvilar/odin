@@ -99,4 +99,10 @@ class Mob < ApplicationRecord
     super(options.merge({:methods => [:image, :name]}))
   end
 
+  def self.results_for(term)
+    Mob.where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
+       .or(Mob.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
+       .or(Mob.where(uid: term))
+       .includes(:respawns)
+  end
 end
