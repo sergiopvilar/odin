@@ -72,11 +72,13 @@ class Item < ApplicationRecord
   end
 
   def hat?
-    loc == 256 || loc == 512 || loc == 1
+    loc == 256 || loc == 257 || loc == 512 || loc == 1 || loc == 768
   end
 
   def hat_location
-    return 'Topo' if loc == 256
+    return 'Topo, Baixo' if loc == 257
+    return 'Topo, Meio' if loc == 768
+    return 'Topo ' if loc == 256
     return 'Meio' if loc == 512
     return 'Baixo' if loc == 1
   end
