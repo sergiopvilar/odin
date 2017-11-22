@@ -40,6 +40,10 @@ class Item < ApplicationRecord
     return "#{item_name}[#{slots}]"
   end
 
+  def price_merchant
+    (price_buy + (price_buy.to_f/100) * 24).to_i
+  end
+
   def image
     "/image/item/#{uid}.png"
   end

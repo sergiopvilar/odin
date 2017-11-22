@@ -47,7 +47,7 @@
 
       <% unless @item.price_buy.blank? %>
         <p><strong>Preço de venda em NPC:</strong> <span class="<%=tag_classes%>"><%=number_with_delimiter(@item.price_buy, delimiter: '.')%>z</span> ou
-          <span class="<%=tag_classes%>"><%=number_with_delimiter(@item.price_buy + (@item.price_buy/100) * 24, delimiter: '.')%>z</span> (Superfaturar 10)
+          <span class="<%=tag_classes%>"><%=number_with_delimiter(@item.price_merchant, delimiter: '.')%>z</span> (Superfaturar 10)
           </p>
       <% end %>
 
