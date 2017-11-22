@@ -45,6 +45,7 @@ class Mob < ApplicationRecord
   end
 
   def mode_text
+    return search_for_mode(mode.to_i) if mode.to_i != 0
     modes = {
       '0x0081': 'Passivo',
       '0x0083': 'Passivo / Coletor',
@@ -106,4 +107,58 @@ class Mob < ApplicationRecord
        .or(Mob.where(uid: term))
        .includes(:respawns)
   end
+
+  def search_for_mode(mode)
+    modes = {
+      'CAN_MOVE': 1,
+      'Coletor': 2,
+      'Agressivo': 4,
+      'Ajuda outros': 8,
+      'Detecta cast': 16,
+      'Não anda aleatoriamente': 32,
+      'Não utiliza habilidades': 64,
+      'Ataca de volta': 128,
+      '': 256,
+      'Detecta cast e muda de alvo': 512,
+      'Muda de alvo': 1024,
+      'Irridadiço': 2048,
+      'Muda de alvo ao ser atacado fisicament': 4096,
+      'Muda de alvo em perseguição': 8192,
+      'Prefere alvos mais fracos': 16384,
+      'Alvo aleatório': 32768,
+      'Ignora atacantes físicos': 65536,
+      'Ignora atacantes mágicos': 131072,
+      'Ignora atacantes a distância': 262144,
+      'MVP': 524288,
+      'Toma apenas "1" de dano': 1048576,
+      'Não pode ser empurrado': 2097152,
+      '': 4194304,
+      '': 8388608,
+      'Drops não são afetados por consumíveis': 16777216,
+      'Detecta em esconderijo': 33554432,
+      'Imune a status negativos': 67108864,
+      'Imune a habilidades': 134217728
+    }
+
+    modes = Hash[modes.to_a.reverse]
+    mob_modes = get_modes(modes, mode).compact
+    mob_modes.push('Não se move') unless mob_modes.include?(:CAN_MOVE)
+    mob_modes.delete_if{ |i| i.blank? || i == :CAN_MOVE }.join(', ')
+  end
+
+  private
+
+  def get_modes(_jobs, rema)
+    _jobs.map do |key, value|
+      if rema - value < 0
+        _jobs.tap { |hs| hs.delete(key) }
+        next
+      end
+      njobs = _jobs.clone
+      njobs.tap { |hs| hs.delete(key) }
+      ret = get_modes(njobs, rema - value)
+      return [key] + ret
+    end
+  end
+
 end
