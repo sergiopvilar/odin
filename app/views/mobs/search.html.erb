@@ -17,7 +17,7 @@
           <td style="padding-top:20px">
             <a href="<%=mob_path(mob.uid)%>"><%=mob.name%> (<%=mob.sprite%>)</a>
           </td>
-          <td><%=mob.respawns.any? ? mob.respawns.map {|r| r.map }.join(', ') : 'Nenhum respawn' %></td>
+          <td><%=mob.respawns.any? ? mob.respawns.includes(:map).map {|r| r.map.name }.join(', ') : 'Nenhum respawn' %></td>
         </tr>
       <% end %>
     </table>
