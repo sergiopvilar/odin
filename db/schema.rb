@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171122162233) do
+ActiveRecord::Schema.define(version: 20171123194419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,12 +21,17 @@ ActiveRecord::Schema.define(version: 20171122162233) do
     t.float "chance"
   end
 
+  create_table "item_names", force: :cascade do |t|
+    t.integer "item_id"
+    t.string "name_portuguese"
+    t.string "name_english"
+    t.text "desc_portuguese"
+    t.text "desc_english"
+  end
+
   create_table "items", force: :cascade do |t|
     t.integer "uid"
     t.string "name_aegis"
-    t.string "name_portuguese"
-    t.string "name_english"
-    t.string "description"
     t.integer "type"
     t.integer "price_buy"
     t.integer "price_sell"
@@ -53,11 +58,15 @@ ActiveRecord::Schema.define(version: 20171122162233) do
     t.index ["name"], name: "index_maps_on_name", unique: true
   end
 
+  create_table "mob_names", force: :cascade do |t|
+    t.integer "mob_id"
+    t.string "name_portuguese"
+    t.string "name_english"
+  end
+
   create_table "mobs", force: :cascade do |t|
     t.integer "uid"
     t.string "sprite"
-    t.string "name_portuguese"
-    t.string "name_english"
     t.integer "level"
     t.integer "hp"
     t.integer "sp"

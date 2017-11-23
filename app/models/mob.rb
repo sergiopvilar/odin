@@ -1,6 +1,7 @@
 class Mob < ApplicationRecord
   has_many :drops
   has_many :respawns
+  has_one :mob_name
 
   def self.with_respawn
     Mob.includes(:respawns).where.not(respawns: { id: nil })
@@ -16,7 +17,7 @@ class Mob < ApplicationRecord
   end
 
   def name
-    name_portuguese.blank? ? name_english : name_portuguese
+    mob_name.name_portuguese.blank? ? mob_name.name_english : mob_name.name_portuguese
   end
 
   def description
@@ -111,12 +112,15 @@ class Mob < ApplicationRecord
   end
 
   def self.results_for(term)
-    Mob.with_respawn
-       .where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
-       .or(Mob.with_respawn.where("lower(name_english) LIKE ?", "%#{term.downcase}%"))
-       .or(Mob.with_respawn.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
-       .or(Mob.with_respawn.where(uid: term))
-       .includes(:respawns)
+
+    mob_by_uid = Mob.where(uid: term).includes(:respawns)
+    return mob_by_uid if mob_by_uid.any?
+
+    mob_ids = MobName.where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
+                     .or(MobName.where("lower(name_english) LIKE ?", "%#{term.downcase}%"))
+                     .or(MobName.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
+                     .pluck(:id)
+    Mob.with_respawn.includes(:respawns).where(id: mob_ids)
   end
 
   def search_for_mode(mode)

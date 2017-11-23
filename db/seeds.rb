@@ -6,12 +6,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'csv'
+
 # Reset
 Item.destroy_all
 Mob.destroy_all
 Respawn.destroy_all
 Drop.destroy_all
 Map.destroy_all
+ItemName.destroy_all
+MobName.destroy_all
 
 # Files
 items_file = File.open("#{Rails.root}/db/json/#{ENV['DB_VERSION']}/item.json", "rb")
@@ -20,11 +24,13 @@ items = ActiveSupport::JSON.decode(items_file.read)
 mobs_file = File.open("#{Rails.root}/db/json/#{ENV['DB_VERSION']}/mob.json", "rb")
 mobs = ActiveSupport::JSON.decode(mobs_file.read)
 
+item_names = { item_en: 'name_english', item_pt: 'name_portuguese' }
+mob_names = { mob_en: 'name_english', mob_pt: 'name_portuguese' }
+
 # Items
 items["items"].each do |i|
   attributes = {
     uid: i["id"],
-    name_aegis: i["nome_aegis"],
     type: i["tipo"],
     price_buy: i["valor_compra"],
     price_sell: i["valor_venda"],
@@ -46,10 +52,8 @@ items["items"].each do |i|
     loc: i["loc"]
   }
 
-  attributes[:description] = i["description"] unless i["description"].blank?
-  attributes[:name_portuguese] = i["nome"] unless i["nome"].blank?
-  attributes[:name_english] = i["nome_english"] unless i["nome_english"].blank?
-  Item.create(attributes)
+  item_id = Item.create(attributes)
+  ItemName.create(item_id: item_id, desc_portuguese: i["description"]) unless i["description"].blank?
 end
 
 mobs["mob"].each do |i|
@@ -81,11 +85,9 @@ mobs["mob"].each do |i|
     adelay: i["aDelay"],
     admotion: i["aMotion"],
     dmotion: i["dMotion"],
-    mode: i["Mode"],
-    name_portuguese: i["kROName"]
+    mode: i["Mode"]
   }
 
-  puts "Creating #{i["ID"]}: #{i["kROName"]}"
   Mob.create(attributes)
 end
 
@@ -127,5 +129,36 @@ mobs["mob"].each do |i|
         delay_end: delays.split('_').last
       })
     end
+  end
+end
+
+# Item names
+item_names.each do |filename, column|
+  file_content = File.read("#{Rails.root}/db/csv/#{filename}.csv")
+  csv = CSV.parse(file_content, :headers => true)
+
+  csv.each do |row|
+    obj = row.to_hash
+    item = Item.find_by_uid(obj["id"])
+    next if item.blank?
+    attributes = {}
+    attributes[column] = obj["name"]
+    iname = ItemName.find_or_create_by(item_id: item.id)
+    iname.update_attributes(attributes)
+  end
+end
+
+mob_names.each do |filename, column|
+  file_content = File.read("#{Rails.root}/db/csv/#{filename}.csv")
+  csv = CSV.parse(file_content, :headers => true)
+
+  csv.each do |row|
+    obj = row.to_hash
+    mob = Mob.find_by_uid(obj["id"])
+    next if mob.blank?
+    attributes = {}
+    attributes[column] = obj["name"]
+    iname = MobName.find_or_create_by(mob_id: mob.id)
+    iname.update_attributes(attributes)
   end
 end

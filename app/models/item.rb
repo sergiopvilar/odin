@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
   has_many :drops
+  has_one :item_name
   self.inheritance_column = :model_type
 
   def drops_with_respawn
@@ -40,10 +41,14 @@ class Item < ApplicationRecord
     arr.join('<br />').html_safe
   end
 
+  def description
+    item_name.desc_portuguese
+  end
+
   def name
-    item_name = name_portuguese.blank? ? name_english : name_portuguese
-    return item_name if slots.blank? || slots == 0
-    return "#{item_name}[#{slots}]"
+    loc_name = item_name.name_portuguese.blank? ? item_name.name_english : item_name.name_english
+    return loc_name if slots.blank? || slots == 0
+    return "#{loc_name}[#{slots}]"
   end
 
   def price_merchant
@@ -141,11 +146,15 @@ class Item < ApplicationRecord
   end
 
   def self.results_for(term)
-    Item.where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
-        .or(Item.where("lower(name_english) LIKE ?", "%#{term.downcase}%"))
-        .or(Item.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
-        .or(Item.where(uid: term))
-        .order(:id)
+
+    items_by_uid = Item.where(uid: term)
+    return items_by_uid if items_by_uid.any?
+
+    ids = ItemName.where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
+        .or(ItemName.where("lower(name_english) LIKE ?", "%#{term.downcase}%"))
+        .or(ItemName.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
+        .pluck(:item_id)
+    Item.where(id: ids).order(:id)
   end
 
   private
