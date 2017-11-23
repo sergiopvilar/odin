@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock "3.10.0"
 
-server '138.197.41.12', user: 'root', port: 22, roles: [:web, :app, :db], primary: true
+server '138.197.41.12', user: 'rails', port: 22, roles: [:web, :app, :db], primary: true
 set :application, "odindb"
 set :repo_url, "git@github.com:sergiovilar/odin-db.git"
 
@@ -11,7 +11,8 @@ set :repo_url, "git@github.com:sergiovilar/odin-db.git"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/rails"
 set :current_path, '/home/rails/rails_project'
-set :user,            'root'
+set :user,            'rails'
+set :tmp_dir, '/home/rails/tmp'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -39,17 +40,32 @@ append :linked_files, ".unicorn.sh"
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-task :restart_unicorn do
-  on roles(:app) do
-    execute :service, "unicorn restart"
+namespace :deploy do
+  desc 'Restart unicorn'
+  task :restart_unicorn do
+    on roles(:app) do
+      execute :service, "unicorn restart"
+    end
+  end
+
+  desc 'Seed no banco'
+  task :seed do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env)  do
+          execute :rake, 'db:seed'
+        end
+      end
+    end
+  end
+
+  desc 'Seta permissões para pastas de assets'
+  task :set_permissions do
+    on roles(:app) do
+      execute "chmod -R 777 /home/rails/current/public/icons"
+    end
   end
 end
 
-task :set_permissions do
-  on roles(:app) do
-    execute "chmod -R 777 /home/rails/current/public/icons"
-  end
-end
-
-after "deploy:published", "restart_unicorn"
+# after "deploy:published", "restart_unicorn"
 after "deploy:published", "set_permissions"
