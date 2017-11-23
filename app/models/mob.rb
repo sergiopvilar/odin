@@ -2,6 +2,10 @@ class Mob < ApplicationRecord
   has_many :drops
   has_many :respawns
 
+  def self.with_respawn
+    Mob.includes(:respawns).where.not(respawns: { id: nil })
+  end
+
   def size
     sizes = ['Pequeno', 'Médio', 'Grande']
     sizes[scale-1]
@@ -107,10 +111,11 @@ class Mob < ApplicationRecord
   end
 
   def self.results_for(term)
-    Mob.where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
-       .or(Mob.where("lower(name_english) LIKE ?", "%#{term.downcase}%"))
-       .or(Mob.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
-       .or(Mob.where(uid: term))
+    Mob.with_respawn
+       .where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
+       .or(Mob.with_respawn.where("lower(name_english) LIKE ?", "%#{term.downcase}%"))
+       .or(Mob.with_respawn.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
+       .or(Mob.with_respawn.where(uid: term))
        .includes(:respawns)
   end
 

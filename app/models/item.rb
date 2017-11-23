@@ -2,6 +2,12 @@ class Item < ApplicationRecord
   has_many :drops
   self.inheritance_column = :model_type
 
+  def drops_with_respawn
+    drop_ids = drops.pluck(:id)
+    mobs = Mob.includes(:drops, :respawns).where(drops: {id: drop_ids}).where.not(respawns: { id: nil }).pluck(:id)
+    drops.includes(:mob).reject { |drop| !mobs.include?(drop.mob.id) }
+  end
+
   def weapon?
     type == 4
   end

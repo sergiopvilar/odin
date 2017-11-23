@@ -1,7 +1,8 @@
 class MobsController < ApplicationController
 
   def show
-    @mob = Mob.includes(:respawns, :drops).find_by_uid(params[:id])
+    @mob = Mob.includes(:respawns, :drops).where(uid: params[:id]).where.not(respawns: { id: nil }).first
+    raise ActiveRecord::RecordNotFound if @mob.blank?
     @title = @mob.name
     @image = @mob.image
     @description = @mob.description

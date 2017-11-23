@@ -82,7 +82,7 @@
     <th colspan="2">Monstro</th>
     <th class="has-text-centered">Chance</th>
   </tr>
-  <% @item.drops.each do |drop| %>
+  <% @item.drops_with_respawn.each do |drop| %>
   <tr>
     <td width="80" class="has-text-centered">
       <img style="height:48px" src="<%=drop.mob.image%>" />
