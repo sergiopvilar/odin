@@ -52,8 +52,8 @@ items["items"].each do |i|
     loc: i["loc"]
   }
 
-  item_id = Item.create(attributes)
-  ItemName.create(item_id: item_id, desc_portuguese: i["description"]) unless i["description"].blank?
+  item = Item.create(attributes)
+  ItemName.create(item_id: item.id, desc_portuguese: i["description"]) unless i["description"].blank?
 end
 
 mobs["mob"].each do |i|

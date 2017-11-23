@@ -119,7 +119,7 @@ class Mob < ApplicationRecord
     mob_ids = MobName.where("lower(name_portuguese) LIKE ?", "%#{term.downcase}%")
                      .or(MobName.where("lower(name_english) LIKE ?", "%#{term.downcase}%"))
                      .or(MobName.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
-                     .pluck(:id)
+                     .pluck(:mob_id)
     Mob.with_respawn.includes(:respawns).where(id: mob_ids)
   end
 
