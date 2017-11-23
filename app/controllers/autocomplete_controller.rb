@@ -7,7 +7,7 @@ class AutocompleteController < ApplicationController
       respond_with []
       return
     end
-    items = Item.results_for(term).limit(5)
+    items = Item.results_for(term).limit(10)
     render json: items.to_json
   end
 

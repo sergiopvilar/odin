@@ -145,6 +145,7 @@ class Item < ApplicationRecord
         .or(Item.where("lower(name_english) LIKE ?", "%#{term.downcase}%"))
         .or(Item.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
         .or(Item.where(uid: term))
+        .order(:id)
   end
 
   private
