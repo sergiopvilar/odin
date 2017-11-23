@@ -11,6 +11,7 @@ Item.destroy_all
 Mob.destroy_all
 Respawn.destroy_all
 Drop.destroy_all
+Map.destroy_all
 
 # Files
 items_file = File.open("#{Rails.root}/db/json/#{ENV['DB_VERSION']}/item.json", "rb")
@@ -101,6 +102,17 @@ mobs["mob"].each do |i|
   end
 end
 
+# Maps
+mobs["mob"].each do |i|
+  mob = Mob.find_by_uid(i["ID"])
+  next if i["respawn"].blank?
+  i["respawn"].each do |map, respawns|
+    respawns.each do |delays, amount|
+      Map.create({name: map}) if Map.find_by_name(map).blank?
+    end
+  end
+end
+
 # Respawns
 mobs["mob"].each do |i|
   mob = Mob.find_by_uid(i["ID"])
@@ -109,7 +121,7 @@ mobs["mob"].each do |i|
     respawns.each do |delays, amount|
       Respawn.create({
         mob_id: mob.id,
-        map: map,
+        map_id: Map.find_by_name(map).id,
         amount: amount,
         delay_start: delays.split('_').first,
         delay_end: delays.split('_').last
