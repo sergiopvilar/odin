@@ -117,8 +117,9 @@
         </tr>
         <% @mob.respawns.each do |respawn| %>
         <tr>
+          <% respawn_map = Map.find_by_id(respawn.map_id) %>
           <td class="has-text-centered"><%=respawn.amount%></td>
-          <td><%=respawn.map%></td>
+          <td><%= link_to respawn_map.name, map_path(respawn_map) %></td>
           <td class="has-text-centered"><%=respawn.tempo%></td>
         </tr>
         <% end %>

@@ -1,0 +1,35 @@
+<section class="hero">
+  <div class="hero-body">
+    <h1 class="title"><%= @map.name %></h1>
+    <!-- h2 com nome descritivo do mapa -->
+  </div>
+</section>
+<div class="columns">
+  <div class="column">
+    <!-- imagem do mapa -->
+  </div>
+  <div class="column">
+    <h4 class="title is-4">Respawns</h4>
+    <table class="table is-fullwidth is-bordered is-hoverable">
+      <tr>
+        <th>Qtd</th>
+        <th>Monstro</th>
+        <th>Tempo</th>
+      </tr>
+      <% for respawn in @map.respawns %>
+        <% respawn_mob = Mob.find_by_id(respawn.mob_id) %>
+        <tr>
+          <td>
+            <%=respawn.amount%>x
+          </td>
+          <td>
+            <%= link_to respawn_mob.name, mob_path(respawn_mob.uid) %>
+          </td>
+          <td>
+            <%=respawn.tempo%>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
