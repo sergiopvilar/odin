@@ -5,7 +5,7 @@ class Item < ApplicationRecord
   def drops_with_respawn
     drop_ids = drops.pluck(:id)
     mobs = Mob.includes(:drops, :respawns).where(drops: {id: drop_ids}).where.not(respawns: { id: nil }).pluck(:id)
-    drops.includes(:mob).reject { |drop| !mobs.include?(drop.mob.id) }
+    drops.includes(:mob).order(:chance).reverse.reject { |drop| !mobs.include?(drop.mob.id) }
   end
 
   def weapon?
