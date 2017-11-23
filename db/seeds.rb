@@ -81,10 +81,10 @@ mobs["mob"].each do |i|
     adelay: i["aDelay"],
     admotion: i["aMotion"],
     dmotion: i["dMotion"],
-    mode: i["Mode"]
+    mode: i["Mode"],
+    name_portuguese: i["kROName"]
   }
 
-  attributes[ENV['DB_VERSION'] == 'ep_4' ? :name_english : :name_portuguese] = i["kROName"]
   puts "Creating #{i["ID"]}: #{i["kROName"]}"
   Mob.create(attributes)
 end
