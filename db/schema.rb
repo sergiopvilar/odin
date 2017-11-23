@@ -48,6 +48,11 @@ ActiveRecord::Schema.define(version: 20171122162233) do
     t.integer "loc"
   end
 
+  create_table "maps", force: :cascade do |t|
+    t.text "name", null: false
+    t.index ["name"], name: "index_maps_on_name", unique: true
+  end
+
   create_table "mobs", force: :cascade do |t|
     t.integer "uid"
     t.string "sprite"
@@ -83,10 +88,11 @@ ActiveRecord::Schema.define(version: 20171122162233) do
 
   create_table "respawns", force: :cascade do |t|
     t.integer "mob_id"
-    t.string "map"
     t.integer "amount"
     t.integer "delay_start"
     t.integer "delay_end"
+    t.integer "map_id"
+    t.index ["map_id"], name: "index_respawns_on_map_id"
   end
 
 end

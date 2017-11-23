@@ -19,4 +19,5 @@ Rails.application.routes.draw do
   # Resources
   resources :mobs, only: [:show]
   resources :items, only: [:show]
+  resources :maps, only: [:show]
 end

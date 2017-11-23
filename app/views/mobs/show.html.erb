@@ -118,7 +118,7 @@
         <% @mob.respawns.each do |respawn| %>
         <tr>
           <td class="has-text-centered"><%=respawn.amount%></td>
-          <td><%=respawn.map%></td>
+          <td><%= link_to respawn.respawn_map.name, map_path(respawn.respawn_map) %></td>
           <td class="has-text-centered"><%=respawn.tempo%></td>
         </tr>
         <% end %>
