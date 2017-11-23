@@ -27,6 +27,12 @@ class Mob < ApplicationRecord
     "#{(adelay.to_f / 1000)}s"
   end
 
+  def aspd
+    delay = adelay.to_f / 1000
+    hps = 1/delay
+    (((200 * hps) - 50) / hps).to_i
+  end
+
   def esquiva_95
      dex + level + 75
   end
@@ -122,7 +128,7 @@ class Mob < ApplicationRecord
       'Detecta cast e muda de alvo': 512,
       'Muda de alvo': 1024,
       'Irridadiço': 2048,
-      'Muda de alvo ao ser atacado fisicament': 4096,
+      'Muda de alvo ao ser atacado fisicamente': 4096,
       'Muda de alvo em perseguição': 8192,
       'Prefere alvos mais fracos': 16384,
       'Alvo aleatório': 32768,

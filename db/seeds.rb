@@ -77,7 +77,7 @@ mobs["mob"].each do |i|
     race: i["Race"],
     element: i["Element"],
     speed: i["Speed"],
-    adelay: i["ADelay"],
+    adelay: i["aDelay"],
     admotion: i["aMotion"],
     dmotion: i["dMotion"],
     mode: i["Mode"]
