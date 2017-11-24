@@ -48,7 +48,7 @@ class Item < ApplicationRecord
   def name
     loc_name = item_name.name_portuguese.blank? ? item_name.name_english : item_name.name_portuguese
     return loc_name if slots.blank? || slots == 0
-    return "#{loc_name}[#{slots}]"
+    return "#{loc_name} [#{slots}]"
   end
 
   def price_merchant
