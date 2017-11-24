@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def site_title
-    is_gg? ? 'RagnaGG' : 'OdinDB'
+    is_gg? ? 'RagnaGG' : 'Odin'
   end
 
   def is_root?
