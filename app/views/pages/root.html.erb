@@ -13,7 +13,7 @@
 </div>
 <% end %>
 
-<div class="markdown-page content">
+<div class="markdown-page content" <%=is_root? ? '' : 'style="padding-top:60px"'%>>
   <h2>Notas de Versão</h2>
   <%=@markdown.render(File.read(@file)).html_safe%>
 </div>
