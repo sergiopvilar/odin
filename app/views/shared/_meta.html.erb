@@ -1,5 +1,5 @@
 <title><%=@title.nil? ? "#{site_title} - Ragnarok Old Times" : " #{@title} - #{site_title}" %></title>
-<meta property="og:title" content="<%=@domain%>|<%=@title.nil? ? "#{site_title} - Ragnarok Database" : @title %>"/>
+<meta property="og:title" content="<%=@title.nil? ? "#{site_title} - Ragnarok Database" : @title %>"/>
 <meta property="og:image" content="http://odindb.com<%=@image.nil? ? '/odin.jpg' : @image %>"/>
 <meta property="og:site_name" content="<%=site_title%>"/>
 <meta property="og:description" content="<%=@description.nil? ? 'Database Old Times para Ragnarok Online' : @description %>" />
