@@ -9,8 +9,8 @@
           <div class="field">
             <label class="label">Busca por Itens</label>
             <div class="control">
-              <form id="item-form" action="/items/search" method="GET">
-                <input autocomplete="off" id="item-search" name="s" class="input is-medium" type="text" placeholder="ID ou Nome do Item">
+              <form id="items-form" action="/items/search" method="GET">
+                <input autocomplete="off" id="items-search" name="s" class="input is-medium" type="text" placeholder="ID ou Nome do Item">
               </form>
             </div>
           </div>
@@ -19,8 +19,18 @@
           <div class="field">
             <label class="label">Busca por Monstros</label>
             <div class="control">
-              <form id="mob-form" action="/mobs/search" method="GET">
-                <input autocomplete="off" id="mob-search" name="s" class="input is-medium" type="text" placeholder="ID ou Nome do Monstro">
+              <form id="mobs-form" action="/mobs/search" method="GET">
+                <input autocomplete="off" id="mobs-search" name="s" class="input is-medium" type="text" placeholder="ID ou Nome do Monstro">
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">Busca por Mapas</label>
+            <div class="control">
+              <form id="maps-form" action="/maps/search" method="GET">
+                <input autocomplete="off" id="maps-search" name="s" class="input is-medium" type="text" placeholder="Nome do Mapa">
               </form>
             </div>
           </div>

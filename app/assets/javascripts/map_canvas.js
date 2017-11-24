@@ -21,7 +21,7 @@ var grayscale = function(pixels, args) {
   var d = pixels.data;
 
   for (var i=0; i<d.length; i+=4) {
-    if(d[i] == 255  && d[i+1] == 0 && d[i+2] == 255)
+    if(d[i] >= 220  && d[i+1] <= 50 && d[i+2] >= 220)
       d[i + 1] = 255
   }
   return pixels;

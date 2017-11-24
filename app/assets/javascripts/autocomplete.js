@@ -1,75 +1,57 @@
-var items = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: {
-    url: '/items/autocomplete/%QUERY',
-    wildcard: '%QUERY'
+function Autocomplete(namespace, attribute, useImage) {
+  var self = this
+    , template
+    , objects
+    , form
+
+  this.namespace = namespace
+  this.attribute = typeof attribute === 'undefined' ? 'uid' : attribute
+  this.useImage = typeof useImage === 'undefined' ? true : useImage
+
+  if(this.useImage) {
+    template = '<div><img style="max-width:32px; max-height:32px; margin-right:5px" src={{image}} /> <strong>{{name}}</strong></div>'
+  } else {
+    template = '<div><strong>{{desc}} ({{name}})</strong></div>'
   }
-});
 
-var mobs = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: {
-    url: '/mobs/autocomplete/%QUERY',
-    wildcard: '%QUERY'
-  }
-});
+  form = $('#' + this.namespace + '-form')
+  window['selected_' + this.namespace] = false
 
-window.selectedItem = false
-window.selectedMob = false
+  form.on('submit', function(e) {
+    if(window['selected_' + self.namespace]) {
+      e.preventDefault()
+      location.href = '/' + self.namespace + '/' + window['selected_' + self.namespace][self.attribute];
+    }
+  })
 
-var itemForm = $('#item-form')
-var mobForm = $('#mob-form')
+  objects = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: '/' + this.namespace + '/autocomplete/%QUERY',
+      wildcard: '%QUERY'
+    }
+  });
 
-itemForm.on('submit', function(e) {
-  if(window.selectedItem) {
-    e.preventDefault()
-    location.href = '/items/' + window.selectedItem.uid;
-  }
-})
+  $('#'+ this.namespace + '-search').typeahead(null, {
+    name: this.namespace,
+    display: 'name',
+    hint: true,
+    highlight: true,
+    source: objects,
+    templates: { suggestion: Handlebars.compile(template) }
+  }).on('change', function() {
+    if(window['selected_' + self.namespace] && $(this).val() !== window['selected_' + self.namespace].name)
+      window['selected_' + self.namespace] = false
+  }).on('keypress', function(e) {
+    if(e.which == 13) form.submit();
+  }).bind('typeahead:selected', function(obj, datum, name) {
+    window['selected_' + self.namespace] = datum
+    location.href = '/' + self.namespace +'/' + window['selected_' + self.namespace][self.attribute]
+  });
 
-mobForm.on('submit', function(e) {
-  if(window.selectedMob) {
-    e.preventDefault()
-    location.href = '/mobs/' + window.selectedMob.uid;
-  }
-})
+}
 
-$('#item-search').typeahead(null, {
-  name: 'items',
-  display: 'name',
-  hint: true,
-  highlight: true,
-  source: items,
-  templates: {
-    suggestion: Handlebars.compile('<div><img style="max-width:32px; max-height:32px; margin-right:5px" src={{image}} /> <strong>{{name}}</strong></div>')
-  }
-}).on('change', function() {
-  if(window.selectedItem && $(this).val() !== window.selectedItem.name)
-    window.selectedItem = false
-}).on('keypress', function(e) {
-  if(e.which == 13) itemForm.submit();
-}).bind('typeahead:selected', function(obj, datum, name) {
-  window.selectedItem = datum
-  location.href = '/items/' + window.selectedItem.uid
-});
-
-$('#mob-search').typeahead(null, {
-  name: 'mobs',
-  display: 'name',
-  hint: true,
-  highlight: true,
-  source: mobs,
-  templates: {
-    suggestion: Handlebars.compile('<div><img style="max-width:32px; max-height:32px; margin-right:5px" src={{image}} /> <strong>{{name}}</strong></div>')
-  }
-}).on('change', function() {
-  if(window.selectedMob && $(this).val() !== window.selectedMob.name)
-    window.selectedMob = false
-}).on('keypress', function(e) {
-  if(e.which == 13) mobForm.submit();
-}).bind('typeahead:selected', function(obj, datum, name) {
-  window.selectedMob = datum
-  location.href = '/mobs/' + window.selectedMob.uid
-});
+new Autocomplete('items')
+new Autocomplete('mobs')
+new Autocomplete('maps', 'name', false)

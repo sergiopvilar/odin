@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171123194419) do
+ActiveRecord::Schema.define(version: 20171124121522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20171123194419) do
 
   create_table "maps", force: :cascade do |t|
     t.text "name", null: false
+    t.string "desc"
     t.index ["name"], name: "index_maps_on_name", unique: true
   end
 

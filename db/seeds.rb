@@ -24,6 +24,9 @@ items = ActiveSupport::JSON.decode(items_file.read)
 mobs_file = File.open("#{Rails.root}/db/json/#{ENV['DB_VERSION']}/mob.json", "rb")
 mobs = ActiveSupport::JSON.decode(mobs_file.read)
 
+maps_file = File.open("#{Rails.root}/db/json/map.json", "rb")
+maps = ActiveSupport::JSON.decode(maps_file.read)
+
 item_names = { item_en: 'name_english', item_pt: 'name_portuguese' }
 mob_names = { mob_en: 'name_english', mob_pt: 'name_portuguese' }
 
@@ -105,14 +108,8 @@ mobs["mob"].each do |i|
 end
 
 # Maps
-mobs["mob"].each do |i|
-  mob = Mob.find_by_uid(i["ID"])
-  next if i["respawn"].blank?
-  i["respawn"].each do |map, respawns|
-    respawns.each do |delays, amount|
-      Map.create({name: map}) if Map.find_by_name(map).blank?
-    end
-  end
+maps["maps"].each do |m|
+  Map.create({name: m['map'], desc: m['name']})  if Map.find_by_name(m['map']).blank?
 end
 
 # Respawns

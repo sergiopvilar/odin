@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # Autocomplete
   get '/items/autocomplete/:s', to: 'autocomplete#items'
   get '/mobs/autocomplete/:s', to: 'autocomplete#mobs'
+  get '/maps/autocomplete/:s', to: 'autocomplete#maps'
 
   # Search
   get '/items/search', to: 'items#search'
