@@ -5,4 +5,21 @@ module ApplicationHelper
     ret = "<span class='has-text-success'>#{percent}%</span>" if percent > 100
     ret.html_safe
   end
+
+  def site_title
+    is_gg? ? 'RagnaGG' : 'OdinDB'
+  end
+
+  def is_gg?
+    @domain == 'ragnagg.odindb.com'
+  end
+
+  def logo_style
+    is_gg? ? 'width:520px; height:177px' : ''
+  end
+
+  def logo_url
+    is_gg? ? '/ragnagg.png' : '/logo.png'
+  end
+
 end
