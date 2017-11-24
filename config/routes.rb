@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # Search
   get '/items/search', to: 'items#search'
   get '/mobs/search', to: 'mobs#search'
+  get '/maps/search', to: 'maps#search'
 
   # Images
   get '/image/map/:name', to: 'images#map'

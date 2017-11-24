@@ -1,0 +1,20 @@
+<div class="content-inside">
+
+  <h1 class="title">Resultado da busca de mapas para "<%=params[:s]%>"</h1>
+  <h2 class="subtitle">Foram encontrados <%=@maps.size%> mapas</h2>
+
+  <% if @maps.any? %>
+    <table class="table is-fullwidth is-striped">
+      <% @maps.each do |map| %>
+        <tr>
+          <td>
+            <a href="<%=map_path(map.name)%>"><%=map.desc%> (<%=map.name%>)</a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>Nada encontrado para sua busca.</p>
+  <% end %>
+
+</div>
