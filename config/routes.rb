@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get '/mobs/search', to: 'mobs#search'
 
   # Images
+  get '/image/map/:name', to: 'images#map'
   get '/image/mob/:id', to: 'images#mob'
   get '/image/item/:id', to: 'images#item'
   get '/image/item_big/:id', to: 'images#item_big'

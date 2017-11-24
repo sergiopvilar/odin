@@ -12,6 +12,11 @@ class ImagesController < ApplicationController
     get_image('item', 'png', item.uid)
   end
 
+  def map
+    rmap = Map.find_by_name(params[:name])
+    get_image('map', 'png', rmap.name)
+  end
+
   def item_big
     item = Item.find_by_uid(params[:id])
     item.type == 6 ? get_image('card', 'png', item.uid) : get_image('collection', 'png', item.uid)
