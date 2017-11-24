@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def logo_style
-    is_gg? ? 'width:520px; height:177px' : ''
+    is_gg? ? 'width:520px; height:177px' : 'width: 450px;height: 273px'
   end
 
   def logo_url
