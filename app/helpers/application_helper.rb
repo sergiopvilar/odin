@@ -10,6 +10,10 @@ module ApplicationHelper
     is_gg? ? 'RagnaGG' : 'OdinDB'
   end
 
+  def is_root?
+    !is_gg?
+  end
+
   def is_gg?
     @domain == 'ragnagg.odindb.com'
   end

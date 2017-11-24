@@ -1,3 +1,4 @@
+<% if is_root? %>
 <div class="content" style="padding-top:60px">
   <h2>Seja bem vindo ao Odin Database!</h2>
   <p>Este database para Ragnarok Online Old Times tem suas informações congeladas no episódio <strong><%=ENV['DB_VERSION'] =='ep_3' ? '3.1 Amatsu & Kunlun' : '4 Umbala e Niflheim'%></strong>.</p>
@@ -9,8 +10,8 @@
     <li>Mateusb12 - Revisão de drops, respawns e elaboração das fórmulas de 95% esquiva, 100% acerto e ASPD</li>
     <li>Zighue - Revisão e sugestão de melhorias</li>
   </ul>
-
 </div>
+<% end %>
 
 <div class="markdown-page content">
   <h2>Notas de Versão</h2>
