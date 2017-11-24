@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
   private
 
   def set_domain
-    @domain = request.subdomains.any? "#{request.subdomains(0).first}.#{request.domain}" : request.domain
+    @domain = request.subdomains.any? ? "#{request.subdomains(0).first}.#{request.domain}" : request.domain
   end
 end
