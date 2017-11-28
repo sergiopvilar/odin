@@ -3,8 +3,9 @@ class Drop < ApplicationRecord
   belongs_to :item
 
   def real_chance
-    real_chance = get_real_chance
-    real_chance > 100 ? 100 : real_chance.round(2)
+    real_chance = get_real_chance.round(2)
+    real_chance = real_chance > real_chance.to_i ? real_chance : real_chance.to_i
+    real_chance > 100 ? 100 : real_chance
   end
 
   def get_real_chance
