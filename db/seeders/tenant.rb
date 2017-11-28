@@ -63,9 +63,7 @@ class TenantSeeder
       }
 
       item = Item.create(attributes)
-      if @tenant == 'public'
-        ItemName.create(item_id: item.id, desc_portuguese: i["description"]) unless i["description"].blank?
-      end
+      ItemName.create(item_id: item.id, desc_portuguese: i["description"]) unless i["description"].blank?
     end
   end
 
