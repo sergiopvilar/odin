@@ -31,7 +31,7 @@ module ApplicationHelper
   end
 
   def square_logo_url
-    public? ? '/odin.jpg' : "/tenant/#{current_site.code}/square-logo.png"
+    public? ? '/odin.jpg' : "/tenant/#{current_site.code}/logo-square.png"
   end
 
 end
