@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124121522) do
+ActiveRecord::Schema.define(version: 20171127232720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20171124121522) do
 
   create_table "items", force: :cascade do |t|
     t.integer "uid"
-    t.string "name_aegis"
     t.integer "type"
     t.integer "price_buy"
     t.integer "price_sell"
@@ -103,6 +102,19 @@ ActiveRecord::Schema.define(version: 20171124121522) do
     t.integer "delay_end"
     t.integer "map_id"
     t.index ["map_id"], name: "index_respawns_on_map_id"
+  end
+
+  create_table "sites", force: :cascade do |t|
+    t.string "domain"
+    t.string "name"
+    t.string "site"
+    t.string "code"
+    t.integer "rate_exp", default: 1
+    t.integer "rate_base", default: 1
+    t.integer "drop_common", default: 1
+    t.integer "drop_card", default: 1
+    t.integer "drop_boss_common", default: 1
+    t.integer "drop_boss_card", default: 1
   end
 
 end

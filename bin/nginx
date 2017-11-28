@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require_relative "../config/boot"
+require_relative "../config/environment"
+
+if ARGV.first == 'start'
+  domain = 'odinlocal.com'
+  domain = ARGV[1] unless ARGV[1].blank?
+  renderer = ERB.new(File.read('./config/nginx.conf.erb'))
+  File.write('./config/nginx.conf', renderer.result())
+  system("sudo /usr/local/bin/nginx -c #{Rails.root}/config/nginx.conf")
+  puts 'Started Nginx'
+elsif ARGV.first == 'stop'
+  system("sudo kill $(cat ./tmp/pids/nginx.pid)")
+  puts 'Stopped Nginx'
+else
+  raise('Unknown action')
+end

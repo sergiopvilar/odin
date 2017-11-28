@@ -6,24 +6,32 @@ module ApplicationHelper
     ret.html_safe
   end
 
+  def public?
+    Apartment::Tenant.current == 'public'
+  end
+
+  def current_site
+    Site.find_by_code(Apartment::Tenant.current)
+  end
+
   def site_title
-    is_gg? ? 'RagnaGG' : 'Odin'
+    public? ? 'Odin' : current_site.name
   end
 
   def is_root?
-    !is_gg?
-  end
-
-  def is_gg?
-    @domain == 'ragnagg.odindb.com'
+    public?
   end
 
   def logo_style
-    is_gg? ? 'width:520px; height:177px' : 'width: 450px;height: 273px'
+    public? ? 'width: 450px;height: 273px' : 'width:520px; height:177px'
   end
 
   def logo_url
-    is_gg? ? '/ragnagg.png' : '/logo.png'
+    public? ? '/logo.png' : "/tenant/#{current_site.code}/logo.png"
+  end
+
+  def square_logo_url
+    public? ? '/odin.jpg' : "/tenant/#{current_site.code}/square-logo.png"
   end
 
 end

@@ -42,6 +42,18 @@ class Mob < ApplicationRecord
      dex + level + 75
   end
 
+  def real_base_exp
+    return exp if Apartment::Tenant.current == 'public'
+    site = Site.find_by_code(Apartment::Tenant.current)
+    return exp * site.rate_exp
+  end
+
+  def real_job_exp
+    return job_exp if Apartment::Tenant.current == 'public'
+    site = Site.find_by_code(Apartment::Tenant.current)
+    return job_exp * site.rate_base
+  end
+
   def race_text
     races = ['Amorfo', 'Morto-Vivo', 'Bruto', 'Planta', 'Inseto', 'Peixe', 'Demônio', 'Humanóide', 'Anjo', 'Dragão',
             'Player']
@@ -121,6 +133,21 @@ class Mob < ApplicationRecord
                      .or(MobName.where("lower(sem_acento(name_portuguese)) ILIKE ?", "%#{term.downcase}%"))
                      .pluck(:mob_id)
     Mob.with_respawn.includes(:respawns).where(id: mob_ids)
+  end
+
+  def boss_droper?
+    is_mvp? || is_boss?
+  end
+
+  def is_mvp?
+    search_for_mode(mode.to_i).split(', ').include?('MVP')
+  end
+
+  def is_boss?
+    mob_mode = search_for_mode(mode.to_i).split(', ')
+    ['Imune a status negativos', 'Não pode ser empurrado', 'Detecta em esconderijo'].all? do |status|
+      mob_mode.include?(status)
+    end
   end
 
   def search_for_mode(mode)

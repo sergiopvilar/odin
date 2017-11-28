@@ -59,6 +59,17 @@ namespace :deploy do
     end
   end
 
+  desc 'Cria funções no banco'
+  task :functions do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env)  do
+          execute :rake, 'db:functions'
+        end
+      end
+    end
+  end
+
   desc 'Seta permissões para pastas de assets'
   task :set_permissions do
     on roles(:app) do
@@ -69,3 +80,4 @@ end
 
 # after "deploy:published", "restart_unicorn"
 after "deploy:published", "set_permissions"
+after "deploy:published", "functions"

@@ -10,7 +10,7 @@
 <% table = @mob.elemental_table %>
 <table class="table is-fullwidth is-bordered">
   <tr>
-    <td rowspan="11" colspan="4" align="center" valign="center" width="30%" class="has-text-centered" style="vertical-align:middle;">
+    <td rowspan="<%=@mob.is_boss? || @mob.is_mvp? ? '10' : '11' %>" colspan="4" align="center" valign="center" width="30%" class="has-text-centered" style="vertical-align:middle;">
       <img src="<%=@mob.image%>" style="padding-top:40px" />
     </td>
     <td colspan="2"><strong>Raça</strong></td>
@@ -54,9 +54,9 @@
   </tr>
   <tr>
     <td colspan="2"><strong>Experiência Base</strong></td>
-    <td><%=@mob.exp%></td>
+    <td><%=@mob.real_base_exp%></td>
     <td colspan="2"><strong>Experiência de Classe</strong></td>
-    <td><%=@mob.job_exp%></td>
+    <td><%=@mob.real_job_exp%></td>
     <td>Vento</td>
     <td><%=format_element(table["wind"])%></td>
   </tr>
@@ -97,7 +97,12 @@
     <td><%=format_element(table["ghost"])%></td>
   </tr>
   <tr>
-    <td colspan="6">
+    <% if @mob.is_boss? || @mob.is_mvp? %>
+      <td colspan="4" align="center" valign="center" class="has-text-centered" style="vertical-align:middle;">
+        <img src="/mob_<%=@mob.is_mvp? ? 'mvp' : 'miniboss' %>.gif" />
+      </td>
+    <% end %>
+    <td colspan="<%=@mob.is_boss? || @mob.is_mvp? ? '6' : '6' %>">
       <%=@mob.mode_text%>
     </td>
     <td>Maldito</td>
