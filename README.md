@@ -1,24 +1,24 @@
-# README
+# Odin Database
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Database para Ragnarok Online
 
-Things you may want to cover:
+## Dependências
 
-* Ruby version
+* RVM
+* Ruby 2.4.0
+* PostgreSQL
 
-* System dependencies
+## Começando
 
-* Configuration
+Crie o banco de dados:
 
-* Database creation
+    rails db:create
 
-* Database initialization
+Migre o banco e rode as seeds (isso pode demorar um pouco):
 
-* How to run the test suite
+    rails db:migrate
+    rails db:seed
 
-* Services (job queues, cache servers, search engines, etc.)
+Rode o rails:
 
-* Deployment instructions
-
-* ...
+    bin/start
